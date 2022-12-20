@@ -8,10 +8,11 @@ class ProjectSerializer(serializers.Serializer):
     Serializer class for 'Project' model.
     """
 
+    id = serializers.IntegerField(label="ID", read_only=True)
     name = serializers.CharField(max_length=100)
     description = serializers.CharField(max_length=100)
-    created_at = serializers.DateTimeField()
-    updated_at = serializers.DateTimeField()
+    created_at = serializers.DateTimeField(read_only=True)
+    updated_at = serializers.DateTimeField(read_only=True)
 
     def create(self, validated_data):
         """
@@ -37,12 +38,13 @@ class SourceSerializer(serializers.Serializer):
     Serializer class for 'Source' model.
     """
 
+    id = serializers.IntegerField(label="ID", read_only=True)
     name = serializers.CharField(max_length=100)
     description = serializers.CharField(max_length=100)
     project = serializers.PrimaryKeyRelatedField(queryset=Project.objects.all())
-    webhook_uuid = serializers.UUIDField()
-    created_at = serializers.DateTimeField()
-    updated_at = serializers.DateTimeField()
+    webhook_uuid = serializers.UUIDField(read_only=True)
+    created_at = serializers.DateTimeField(read_only=True)
+    updated_at = serializers.DateTimeField(read_only=True)
 
     def create(self, validated_data):
         """

@@ -15,13 +15,12 @@ class ProjectView(APIView):
     def get(self, request):
         all_projects = Project.objects.all()
         serialized_projects = ProjectSerializer(all_projects, many=True)
-        if serialized_projects.is_valid():
-            return Response(serialized_projects.data, status=status.HTTP_200_OK)
-        return Response(serialized_projects.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serialized_projects.data, status=status.HTTP_200_OK)
 
     def post(self, request):
-        serialized_project = ProjectSerializer(request.data)
+        serialized_project = ProjectSerializer(data=request.data)
         if serialized_project.is_valid():
+            serialized_project.save()
             return Response(serialized_project.data, status=status.HTTP_201_CREATED)
         return Response(serialized_project.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -39,10 +38,8 @@ class ProjectDetailView(APIView):
 
     def get(self, request, pk):
         required_project = self.get_object(pk=pk)
-        serialized_project = ProjectSerializer(data=required_project)
-        if serialized_project.is_valid():
-            return Response(serialized_project.data, status=status.HTTP_200_OK)
-        return Response(serialized_project.errors, status=status.HTTP_400_BAD_REQUEST)
+        serialized_project = ProjectSerializer(required_project)
+        return Response(serialized_project.data, status=status.HTTP_200_OK)
 
     def put(self, request, pk):
         required_project = Project.objects.get(pk=pk)
