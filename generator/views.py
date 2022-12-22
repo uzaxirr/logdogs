@@ -25,7 +25,7 @@ class ProjectView(APIView):
         return Response(serialized_project.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class ProjectDetailView(APIView):
+class ProjectDetailedView(APIView):
     """
     Get, Update and Delete on `Project` model
     """
@@ -60,18 +60,17 @@ class SourceView(APIView):
     Create amd List on`Source` model
     """
 
-    def get_project(self, request):
+    def get_project(self, project_id):
         """
         Returns a `Project` model associated with the Source
         """
-        project_id = request.data.get("project")
         try:
             return Project.objects.get(pk=project_id)
         except Project.DoesNotExist:
             return None
 
-    def get(self, request):
-        project = self.get_project()
+    def get(self, request, project_id):
+        project = self.get_project(project_id=project_id)
         if project is None:
             return Response(
                 {"error": "project not found"}, status=status.HTTP_400_BAD_REQUEST
@@ -79,6 +78,14 @@ class SourceView(APIView):
         all_source = Source.objects.filter(project=project)
         serialized_sources = SourceSerializer(all_source, many=True)
         return Response(serialized_sources.data, status=status.HTTP_200_OK)
+
+    def post(self, request, project_id):
+        request.data["project"] = project_id
+        serialized_source = SourceSerializer(data=request.data)
+        if serialized_source.is_valid():
+            serialized_source.save()
+            return Response(serialized_source.data, status=status.HTTP_201_CREATED)
+        return Response(serialized_source.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class SourceDetailedView(APIView):
@@ -92,18 +99,19 @@ class SourceDetailedView(APIView):
         except Source.DoesNotExist:
             raise Http404
 
-    def get(self, request, pk):
+    def get(self, request, project_id, pk):
         serialized_source = SourceSerializer(self.get_object(pk=pk))
         return Response(serialized_source.data)
 
-    def put(self, request, pk):
+    def put(self, request, project_id, pk):
+        request.data["project"] = project_id
         serialized_source = SourceSerializer(self.get_object(pk=pk), data=request.data)
         if serialized_source.is_valid():
             serialized_source.save()
             return Response(serialized_source.data, status=status.HTTP_202_ACCEPTED)
         return Response(serialized_source.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, pk):
+    def delete(self, request, project_id, pk):
         try:
             required_source = Source.objects.get(pk=pk)
         except Source.DoesNotExist:
