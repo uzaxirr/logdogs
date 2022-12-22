@@ -22,7 +22,7 @@ class ProjectSerializer(serializers.Serializer):
 
     def update(self, instance, validated_data):
         """
-        Update and return a new `Snippet` instance, given the validated data.
+        Update and return a new `Project` instance, given the validated data.
         """
 
         instance.name = validated_data.get("name", instance.name)

@@ -6,6 +6,7 @@ from generator.views import (
     SourceView,
     SourceDetailedView,
 )
+from watcher.views import EventsView
 
 urlpatterns = [
     path("projects/", ProjectView.as_view(), name="projects"),
@@ -16,4 +17,5 @@ urlpatterns = [
         SourceDetailedView.as_view(),
         name="source_detail",
     ),
+    path("source/<int:source_id>/events", EventsView.as_view(), name="list_events"),
 ]
