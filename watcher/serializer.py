@@ -5,9 +5,7 @@ from watcher.models import Events
 
 
 class EventSerializer(serializers.Serializer):
-    """
-    Serializer class for 'Event' model.
-    """
+    """Serializer class for 'Event' model."""
 
     id = serializers.IntegerField(label="ID", read_only=True)
     title = serializers.CharField(max_length=255)
@@ -20,15 +18,11 @@ class EventSerializer(serializers.Serializer):
     updated_at = serializers.DateTimeField(read_only=True)
 
     def create(self, validated_data):
-        """
-        Create and return a new `Event` instance, given the validated data.
-        """
+        """Create and return a new `Event` instance, given the validated data."""
         return Events.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
-        """
-        Update and return a new `Snippet` instance, given the validated data.
-        """
+        """Update and return a new `Snippet` instance, given the validated data."""
 
         instance.title = validated_data.get("name", instance.name)
         instance.description = validated_data.get(

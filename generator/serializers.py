@@ -4,9 +4,7 @@ from generator.models import Project, Source
 
 
 class ProjectSerializer(serializers.Serializer):
-    """
-    Serializer class for 'Project' model.
-    """
+    """Serializer class for 'Project' model."""
 
     id = serializers.IntegerField(label="ID", read_only=True)
     name = serializers.CharField(max_length=100)
@@ -15,15 +13,11 @@ class ProjectSerializer(serializers.Serializer):
     updated_at = serializers.DateTimeField(read_only=True)
 
     def create(self, validated_data):
-        """
-        Create and return a new `Project` instance, given the validated data.
-        """
+        """Create and return a new `Project` instance, given the validated data."""
         return Project.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
-        """
-        Update and return a new `Project` instance, given the validated data.
-        """
+        """Update and return a new `Project` instance, given the validated data."""
 
         instance.name = validated_data.get("name", instance.name)
         instance.description = validated_data.get(
@@ -37,9 +31,7 @@ class ProjectSerializer(serializers.Serializer):
 
 
 class SourceSerializer(serializers.Serializer):
-    """
-    Serializer class for 'Source' model.
-    """
+    """Serializer class for 'Source' model."""
 
     id = serializers.IntegerField(label="ID", read_only=True)
     name = serializers.CharField(max_length=100)
@@ -51,15 +43,11 @@ class SourceSerializer(serializers.Serializer):
     updated_at = serializers.DateTimeField(read_only=True)
 
     def create(self, validated_data):
-        """
-        Create and return a new `Source` instance, given the validated data.
-        """
+        """Create and return a new `Source` instance, given the validated data."""
         return Source.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
-        """
-        Update and return a new `Snippet` instance, given the validated data.
-        """
+        """Update and return a new `Snippet` instance, given the validated data."""
 
         instance.name = validated_data.get("name", instance.name)
         instance.description = validated_data.get(

@@ -10,14 +10,10 @@ from watcher.serializer import EventSerializer
 
 # Create your views here.
 class ListenEventView(APIView):
-    """
-    Listen for events from sources
-    """
+    """Listen for events from sources"""
 
     def get_source(self, source_uuid):
-        """
-        Returns a `Source` model associated with the Event
-        """
+        """Returns a `Source` model associated with the Event"""
         try:
             return Source.objects.get(webhook_uuid=source_uuid)
         except Source.DoesNotExist:
@@ -36,9 +32,7 @@ class ListenEventView(APIView):
 
 
 class EventsView(APIView):
-    """
-    List all events, or create a new event.
-    """
+    """List all events, or create a new event."""
 
     def get(self, request, source_id):
         try:
@@ -51,9 +45,7 @@ class EventsView(APIView):
 
 
 class EventDetailedView(APIView):
-    """
-    Retrieve and Delete on `Event` model
-    """
+    """Retrieve and Delete on `Event` model"""
 
     def get_object(self, pk):
         try:

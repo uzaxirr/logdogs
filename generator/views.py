@@ -8,9 +8,7 @@ from generator.serializers import ProjectSerializer, SourceSerializer
 
 
 class ProjectView(APIView):
-    """
-    Create amd List on `Project` model
-    """
+    """Create amd List on `Project` model"""
 
     def get(self, request):
         all_projects = Project.objects.all()
@@ -26,9 +24,7 @@ class ProjectView(APIView):
 
 
 class ProjectDetailedView(APIView):
-    """
-    Get, Update and Delete on `Project` model
-    """
+    """Get, Update and Delete on `Project` model"""
 
     def get_object(self, pk):
         try:
@@ -57,14 +53,10 @@ class ProjectDetailedView(APIView):
 
 
 class SourceView(APIView):
-    """
-    Create amd List on`Source` model
-    """
+    """Create amd List on`Source` model"""
 
     def get_project(self, project_id):
-        """
-        Returns a `Project` model associated with the Source
-        """
+        """Returns a `Project` model associated with the Source"""
         try:
             return Project.objects.get(pk=project_id)
         except Project.DoesNotExist:
@@ -90,9 +82,7 @@ class SourceView(APIView):
 
 
 class SourceDetailedView(APIView):
-    """
-    Retrieve, Update and Delete on `Source` model
-    """
+    """Retrieve, Update and Delete on `Source` model"""
 
     def get_object(self, pk):
         try:
