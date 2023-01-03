@@ -1,4 +1,5 @@
 from django.db import models
+
 from generator.models import Project, Source
 
 
@@ -37,7 +38,8 @@ class Events(models.Model):
     description = models.TextField()
     source = models.ForeignKey(Source, on_delete=models.CASCADE)
     log_data = models.JSONField()
-    priority = models.CharField(max_length=2, choices=PRIORITY_CHOICES, default="P4")
+    priority = models.CharField(
+        max_length=2, choices=PRIORITY_CHOICES, default="P4")
     log_level = models.CharField(
         max_length=7, choices=LOG_LEVEL_CHOICES, default="INFO"
     )

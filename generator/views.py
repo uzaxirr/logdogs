@@ -43,7 +43,8 @@ class ProjectDetailedView(APIView):
 
     def put(self, request, pk):
         required_project = Project.objects.get(pk=pk)
-        serialized_project = ProjectSerializer(required_project, data=request.data)
+        serialized_project = ProjectSerializer(
+            required_project, data=request.data)
         if serialized_project.is_valid():
             serialized_project.save()
             return Response(serialized_project.data, status=status.HTTP_202_ACCEPTED)
@@ -105,7 +106,8 @@ class SourceDetailedView(APIView):
 
     def put(self, request, project_id, pk):
         request.data["project"] = project_id
-        serialized_source = SourceSerializer(self.get_object(pk=pk), data=request.data)
+        serialized_source = SourceSerializer(
+            self.get_object(pk=pk), data=request.data)
         if serialized_source.is_valid():
             serialized_source.save()
             return Response(serialized_source.data, status=status.HTTP_202_ACCEPTED)
