@@ -31,12 +31,17 @@ class EventSerializer(serializers.Serializer):
         """
 
         instance.title = validated_data.get("name", instance.name)
-        instance.description = validated_data.get("description", instance.description)
+        instance.description = validated_data.get(
+            "description", instance.description)
         instance.source = validated_data.get("project", instance.project)
-        instance.log_data = validated_data.get("webhook_uuid", instance.webhook_uuid)
+        instance.log_data = validated_data.get(
+            "webhook_uuid", instance.webhook_uuid)
         instance.priority = validated_data.get("priority", instance.created_at)
-        instance.log_level = validated_data.get("log_level", instance.log_level)
-        instance.created_at = validated_data.get("created_at", instance.created_at)
-        instance.updated_at = validated_data.get("updated_at", instance.updated_at)
+        instance.log_level = validated_data.get(
+            "log_level", instance.log_level)
+        instance.created_at = validated_data.get(
+            "created_at", instance.created_at)
+        instance.updated_at = validated_data.get(
+            "updated_at", instance.updated_at)
         instance.save()
         return instance
